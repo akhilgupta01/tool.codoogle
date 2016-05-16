@@ -1,0 +1,9 @@
+cvs.root=
+cvs.password=
+
+work.folder=/dvp/shr/sft/wlstls/codeExplorer/
+checkoutBranch=branch_rel_14_40
+indexedFileExtensions=.xml,.txt,.java,.sh,.bat,.properties,.jsp,.sql,.xsd,.wsdl
+default.version=14.40-STABLE-SNAPSHOT
+
+teleResourcesDir=

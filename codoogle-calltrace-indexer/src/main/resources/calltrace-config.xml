@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:callTraceConfig xmlns:tns="http://www.fullgc.com/codoogle/calltrace-config/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.fullgc.com/codoogle/calltrace-config/calltrace-config.xsd ">
+  <baseIndexLocation>baseIndexLocation</baseIndexLocation>
+  <traceCollectionGroup id="cg1" interval="5000">
+    <domainConfig indexGroup="group1" domainName="prd_rmd_domain" adminURL="http://adminserver:9999/" serverNamePattern=".*A1"/>
+  </traceCollectionGroup>
+</tns:callTraceConfig>

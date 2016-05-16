@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.fullgc.com/codoogle/vcs-config/" targetNamespace="http://www.fullgc.com/codoogle/vcs-config/">
+
+	<!-- ************************************************************************************* -->
+	<!-- ********************** Version control system related configurations **************** -->
+	<!-- ************************************************************************************* -->
+	<complexType name="SourceControlSystemType" abstract="true">
+		<attribute name="id" type="string"></attribute>
+		<attribute name="user" type="string"></attribute>
+		<attribute name="password" type="string"></attribute>
+	</complexType>
+
+	<complexType name="CVSType">
+		<complexContent>
+			<extension base="tns:SourceControlSystemType">
+				<sequence>
+					<element name="hostName" type="string"></element>
+					<element name="path" type="string"></element>
+				</sequence>
+				
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="SVNType">
+		<complexContent>
+			<extension base="tns:SourceControlSystemType"></extension>
+		</complexContent>
+	</complexType>
+
+	<!-- ************************************************************************************* -->
+	<!-- *************************** Call trace configurations ******************************* -->
+	<!-- ************************************************************************************* -->
+    
+    <complexType name="DomainConfigType">
+    	<attribute name="domainName" type="string"/>
+    	<attribute name="adminHostName" type="string"/>
+    	<attribute name="adminPort" type="int"/>
+    	<attribute name="userName" type="string"/>
+    	<attribute name="password" type="string"/>
+    	<attribute name="serverNamePattern" type="string"/>
+    </complexType>
+
+    <complexType name="TraceCollectionGroupType">
+    	<sequence>
+    		<element name="domainConfig" type="tns:DomainConfigType" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    	<attribute name="id" type="string"/>
+    	<attribute name="indexGroup" type="string"/>
+    	<attribute name="threadDumpInterval" type="long"/>
+    	<attribute name="totalDuration" type="long"/>
+    </complexType>
+
+
+	<!-- ************************************************************************************* -->
+	<!-- *************************** Call index configuration ******************************** -->
+	<!-- ************************************************************************************* -->
+	<complexType name="CodeIndexConfigType">
+		<sequence>
+			<element name="checkoutLocation" type="string" maxOccurs="1" minOccurs="1" />
+			<element name="ignoredFiles" type="string" maxOccurs="1" minOccurs="0" />			<element name="modulesList" type="tns:ModuleListType" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+		<attribute name="indexGroup" type="string" use="required"/>
+		<attribute name="refreshInterval" type="integer" use="optional"/>
+	</complexType>
+
+	<complexType name="CodoogleConfigurationType">
+    	<sequence>
+    		<element name="baseIndexLocation" type="string"
+    			maxOccurs="1" minOccurs="1" />
+    		<element name="codeIndexGroups"
+    			type="tns:CodeIndexConfigType" maxOccurs="unbounded"
+    			minOccurs="0" />
+    		<element name="traceCollectionGroups"
+    			type="tns:TraceCollectionGroupType" maxOccurs="unbounded"
+    			minOccurs="0">
+    		</element>
+
+    		<element name="threadDumpConfig"
+    			type="tns:ThreadDumpConfigType" maxOccurs="1" minOccurs="0">
+    		</element>
+    		<element name="sourceControlInfo" type="tns:SourceControlSystemType" maxOccurs="unbounded" minOccurs="0"/>
+    	</sequence>
+	</complexType>
+
+    <element name="codoogleConfig" type="tns:CodoogleConfigurationType">
+    </element>
+
+    <complexType name="ThreadDumpConfigType">
+    	<sequence>
+    		<element name="includedPatterns" type="tns:IncludedPatterns"></element>
+    		<element name="excludedPatterns" type="tns:ExcludedPatterns"></element>
+    		<element name="excludedEntryPointPatterns" type="tns:ExcludedEntryPointPatterns"></element>
+    	</sequence>
+    </complexType>
+
+    <complexType name="IncludedPatterns">
+    	<sequence>
+    		<element name="include" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="ExcludedPatterns">
+    	<sequence>
+    		<element name="exclude" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="ExcludedEntryPointPatterns">
+    	<sequence>
+    		<element name="excludedEntryPointPattern" type="string" maxOccurs="unbounded" minOccurs="1"></element>
+    	</sequence>
+    </complexType>
+    
+    <complexType name="ModuleListType">
+    	<sequence>
+    		<element name="file" type="string" maxOccurs="1" minOccurs="1"/>
+    		<element name="sourceControlId" type="string" maxOccurs="1" minOccurs="1"/>
+    		<element name="branch" type="string" maxOccurs="1" minOccurs="1"/>
+    	</sequence>
+    </complexType>
+</schema>

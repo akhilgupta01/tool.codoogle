@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:codoogleConfig 
+	xmlns:tns="http://www.fullgc.com/codoogle/vcs-config/" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.fullgc.com/codoogle/vcs-config/ codoogle-config.xsd ">
+  
+	<baseIndexLocation>/codeExplorer/codoogle/indexes</baseIndexLocation>
+
+	<sourceControlInfo xsi:type="tns:CVSType" id="tinaCVSRepo" user="username" password="password">
+		<hostName>cvshost.name</hostName>
+		<path>/pathto/cvs/repositories/module</path>
+	</sourceControlInfo>
+	
+	<codeIndexGroups indexGroup="indexGroup1" refreshInterval="900">
+		<checkoutLocation>/codeExplorer/codoogle/sources</checkoutLocation>
+		<ignoredFiles>.*\/CVS\/.*</ignoredFiles>
+		<modulesList>
+			<file>/codeExplorer/codoogle/branch_rel_16_20.txt</file>
+			<sourceControlId>tinaCVSRepo</sourceControlId>
+			<branch>branch_rel_16_20</branch>
+    	</modulesList>
+	</codeIndexGroups>
+
+	<traceCollectionGroups id="prd_cbe_cust_servers" indexGroup="PRD" threadDumpInterval="5000" totalDuration="100000">
+		<domainConfig adminHostName="adminhost" adminPort="8500" domainName="PRD_CBE_DOMAIN" serverNamePattern="wlsCbeCus.*" userName="uuuuu" password="ppppp" />
+	</traceCollectionGroups>
+
+	<threadDumpConfig>
+		<includedPatterns>
+			<include>com.sun.xml.ws.client.sei.SEIStub.invoke.*</include>
+			<include>.*ExecuteThread.*for queue.*</include>
+			<include>weblogic.wsee.jaxws.HttpServletAdapter.*</include>
+			<include>weblogic.wsee.server.servlet.SoapProcessor.*</include>
+			<include>weblogic.webservice.server.servlet.WebServiceServlet.*</include>
+		</includedPatterns>
+		<excludedPatterns>
+			<exclude>.*__WL_invoke.*</exclude>
+			<exclude>.*Log4JWatchDog.*</exclude>
+			<exclude>.*comm.persistence.*</exclude>
+			<exclude>.*comm.integration.*</exclude>
+			<exclude>.*j2eeframework.datalayer.dbconnection.*</exclude>
+			<exclude>.*j2eeframework.services.logging.*</exclude>
+			<exclude>.*utils.*Logger.*</exclude>
+			<exclude>.*utils.AppServiceFactory.*</exclude>
+			<exclude>.*NinasConnectionFactory.*</exclude>
+			<exclude>weblogic.wsee.server.servlet.SoapProcessor.process.*</exclude>
+			<exclude>weblogic.wsee.jaxws.HttpServletAdapter.*run.*</exclude>
+			<exclude>weblogic.webservice.server.servlet.WebServiceServlet.serverSideInvoke.*</exclude>
+			<exclude>.*BusinessExceptionUtils.*</exclude>
+			<exclude>.*soa_model.entities.*</exclude>
+			<exclude>.*toString.*</exclude>
+			<exclude>.*ProxyBindingCalls.*</exclude>
+			<exclude>.*makeConnection.*</exclude>
+			<exclude>.*RotatingFileWriter.*</exclude>
+			<exclude>.*org.apache.log4j.*</exclude>
+			<exclude>.*comm.kpi.*</exclude>
+			<exclude>.*comm.log.*</exclude>
+		</excludedPatterns>
+		<excludedEntryPointPatterns>
+			<excludedEntryPointPattern>.*srv.common.portal.iacf.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>.*comm.presentation.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>.*pres.common.framework.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>.*j2eeframework.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>weblogic.wsee.jaxws.HttpServletAdapter.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>weblogic.wsee.server.servlet.SoapProcessor.*</excludedEntryPointPattern>
+			<excludedEntryPointPattern>weblogic.webservice.server.servlet.WebServiceServlet.*</excludedEntryPointPattern>
+		</excludedEntryPointPatterns>
+	</threadDumpConfig>
+</tns:codoogleConfig>

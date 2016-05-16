@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<style type="text/css" title="currentStyle">
+			@import "./js/datatable/css/demo_page.css"; 
+			@import "./js/datatable/css/demo_table.css";
+		</style>
+		<script type="text/javascript" language="javascript" src="./js/datatable/js/jquery.js"></script>
+		<script type="text/javascript" language="javascript" src="./js/datatable/js/jquery.dataTables.js"></script>
+	</head>	
+	<body>
+		<div align="center">
+			<span>Enter a method Name (only name)</span>
+			<input type="text" id="searchBox" size="100"/>
+			<input type="button" value="Go.." onClick="findMethodCalls();"/>
+			<input type="button" value="Refresh" onClick="refresh();"/>
+		</div>
+		<hr>
+		<table id="searchResults_table" width="100%" height="100%" >
+		<thead>
+			<tr width="100%">
+				<th  width="15%" valign="top" align="center">Module Name</th>
+				<th  width="15%" valign="top" align="center">Calling Class</th>
+				<th  width="15%" valign="top" align="center">Calling Method</th>
+				<th  width="15%" valign="top" align="center">Called Class</th>
+				<th  width="15%" valign="top" align="center">Called Method</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr width="100%">
+				<td id="module_name"></td>
+				<td id="calling_class"></td>
+				<td id="calling_method"></td>
+				<td id="called_class"></td>
+				<td id="called_method"></td>
+			</tr>
+		</tbody>	
+		</table>
+	</body>
+
+	<script type="text/javascript">
+		var resultsTable;
+		$(document).ready(function() {
+			resultsTable = $('#searchResults_table').dataTable({
+				"iDisplayLength": 25
+			});
+		});
+	
+		function findMethodCalls(){
+			if(searchBox.value==""){
+				alert('please enter the method name');
+				return;
+			}
+			var methodName=searchBox.value;
+			$.get('/dm/resources/searcher/methodInvocations/' + methodName).done(function(jsonData){
+				resultsTable.fnClearTable();
+				for(var i=0;i<jsonData.length;i++){
+					var resultRow = jsonData[i];
+					resultsTable.fnAddData([resultRow.callingModule,
+					                        resultRow.callingMethod.owningClass,
+					                        resultRow.callingMethod.name + "(" + resultRow.callingMethod.parameters + ")",
+					                        resultRow.calledMethod.owningClass,
+					                        resultRow.calledMethod.name + "(" + resultRow.calledMethod.parameters + ")"]);
+				}
+			});
+		}
+		
+		function refresh(){
+			alert('This will download all the artifacts from nexus and rebuild the index. Please wait for 15 minutes.');
+			$.get('/dm/resources/searcher/class/rebuildIndex');
+		}
+		
+	</script>
+</html>	
